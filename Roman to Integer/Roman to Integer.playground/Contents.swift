@@ -1,5 +1,5 @@
-// Runtime: 44 ms, faster than 18.85% of Swift online submissions for Roman to Integer.
-// Memory Usage: 14.8 MB, less than 21.73% of Swift online submissions for Roman to Integer.
+// Runtime: 24 ms, faster than 76.52% of Swift online submissions for Roman to Integer.
+// Memory Usage: 14.6 MB, less than 42.33% of Swift online submissions for Roman to Integer.
 
 import UIKit
 
@@ -11,22 +11,18 @@ print(num)
 
 
 class Solution {
-    let dic: [Character: Int] = ["I":1, "V":5, "X":10, "L":50, "C":100, "D":500, "M":1000]
-    
     func romanToInt(_ s: String) -> Int {
-        var chars = Array(s.reversed())
-        var lastVal = dic[chars[0]]!
+        let dic: [Character: Int] = ["I":1, "V":5, "X":10, "L":50, "C":100, "D":500, "M":1000]
         
-        var total = lastVal // Last character is always summed up
-        chars.removeFirst()
+        var total = 0, prevVal = 0
         
-        for char in chars {
-            if dic[char]! >= lastVal {
-                lastVal = dic[char]!
-                total += lastVal
+        for char in s.reversed() {
+            if dic[char]! >= prevVal {
+                prevVal = dic[char]!
+                total += prevVal
             } else {
-                lastVal = dic[char]!
-                total -= lastVal
+                prevVal = dic[char]!
+                total -= prevVal
             }
         }
         
