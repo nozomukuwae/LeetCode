@@ -1,4 +1,4 @@
-// Runtime: 36 ms, faster than 73.06% of Swift online submissions for Two Sum.
+// Runtime: 40 ms, faster than 30.82% of Swift online submissions for Two Sum.
 // Memory Usage: 14.5 MB, less than 13.51% of Swift online submissions for Two Sum.
 
 
@@ -12,12 +12,12 @@ class Solution {
     func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
         var dict: [Int: Int] = [:]
         
-        for i in (0 ..< numbers.count) {
-            if let j = dict[target - numbers[i]] {
+        for (i, n) in numbers.enumerated() {
+            if let j = dict[target - n] {
                 return [j, i]
             }
             
-            dict[numbers[i]] = i
+            dict[n] = i
         }
         
         fatalError()
