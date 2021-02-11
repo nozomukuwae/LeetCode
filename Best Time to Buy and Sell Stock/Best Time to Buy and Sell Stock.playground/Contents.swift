@@ -1,5 +1,5 @@
-// Runtime: 988 ms, faster than 34.12% of Swift online submissions for Best Time to Buy and Sell Stock.
-// Memory Usage: 17.9 MB, less than 18.23% of Swift online submissions for Best Time to Buy and Sell Stock.
+// Runtime: 944 ms, faster than 44.22% of Swift online submissions for Best Time to Buy and Sell Stock.
+// Memory Usage: 17.4 MB, less than 50.90% of Swift online submissions for Best Time to Buy and Sell Stock.
 
 
 import UIKit
@@ -13,15 +13,12 @@ print(profit2)
 class Solution {
     func maxProfit(_ prices: [Int]) -> Int {
         
-        var minPrice = Int.max
+        var minPrice = prices[0]
         var maxProfit = 0
         
-        for p in prices {
-            if p < minPrice {
-                minPrice = p
-            } else if p - minPrice > maxProfit {
-                maxProfit = p - minPrice
-            }
+        for i in 1 ..< prices.count {
+            minPrice = min(minPrice, prices[i])
+            maxProfit = max(maxProfit, prices[i] - minPrice)
         }
         
         return maxProfit
