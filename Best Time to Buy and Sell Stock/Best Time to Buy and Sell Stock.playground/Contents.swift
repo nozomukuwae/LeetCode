@@ -13,17 +13,21 @@ class Solution {
     func maxProfit(_ prices: [Int]) -> Int {
         
         var maxProfit = 0
+        var maxPriceIndex = 0
+        
         for i in 0 ..< prices.count {
-            var maxPrice = prices[i]
-            
-            for j in i+1 ..< prices.count {
-                if prices[j] > maxPrice {
-                    maxPrice = prices[j]
+            if maxPriceIndex <= i {
+                maxPriceIndex = i
+                
+                for j in i+1 ..< prices.count {
+                    if prices[j] > prices[maxPriceIndex] {
+                        maxPriceIndex = j
+                    }
                 }
             }
             
-            if maxPrice - prices[i] > maxProfit {
-                maxProfit = maxPrice - prices[i]
+            if prices[maxPriceIndex] - prices[i] > maxProfit {
+                maxProfit = prices[maxPriceIndex] - prices[i]
             }
         }
         
