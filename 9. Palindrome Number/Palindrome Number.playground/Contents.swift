@@ -1,5 +1,5 @@
-//Runtime: 44 ms, faster than 73.33% of Swift online submissions for Palindrome Number.
-//Memory Usage: 14.3 MB, less than 33.67% of Swift online submissions for Palindrome Number.
+//Runtime: 40 ms, faster than 82.67% of Swift online submissions for Palindrome Number.
+//Memory Usage: 14 MB, less than 74.67% of Swift online submissions for Palindrome Number.
 
 import UIKit
 
@@ -20,14 +20,10 @@ class Solution {
             n /= 10
         }
         
-        var i = 0, j = digits.count - 1
-        while i < j {
-            if digits[i] != digits[j] {
+        for i in 0 ..< digits.count / 2 {
+            if digits[i] != digits[digits.count - 1 - i] {
                 return false
             }
-            
-            i += 1
-            j -= 1
         }
                 
         return true
