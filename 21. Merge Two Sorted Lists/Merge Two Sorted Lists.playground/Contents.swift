@@ -1,5 +1,5 @@
-//Runtime: 8 ms, faster than 99.71% of Swift online submissions for Merge Two Sorted Lists.
-//Memory Usage: 14.4 MB, less than 15.08% of Swift online submissions for Merge Two Sorted Lists.
+//Runtime: 16 ms, faster than 20.79% of Swift online submissions for Merge Two Sorted Lists.
+//Memory Usage: 14.1 MB, less than 36.75% of Swift online submissions for Merge Two Sorted Lists.
 
 import UIKit
 
@@ -40,17 +40,7 @@ class Solution {
             currentNode = currentNode!.next
         }
         
-        while p1 != nil {
-            currentNode!.next = ListNode(p1!.val)
-            p1 = p1!.next
-            currentNode = currentNode!.next
-        }
-
-        while p2 != nil {
-            currentNode!.next = ListNode(p2!.val)
-            p2 = p2!.next
-            currentNode = currentNode!.next
-        }
+        currentNode!.next = p1 ?? p2
         
         return mergedList
     }
