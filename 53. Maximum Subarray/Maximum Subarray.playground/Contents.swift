@@ -1,5 +1,5 @@
-//Runtime: 64 ms, faster than 13.55% of Swift online submissions for Maximum Subarray.
-//Memory Usage: 14.3 MB, less than 48.28% of Swift online submissions for Maximum Subarray.
+//Runtime: 60 ms, faster than 15.65% of Swift online submissions for Maximum Subarray.
+//Memory Usage: 14.4 MB, less than 22.52% of Swift online submissions for Maximum Subarray.
 
 import UIKit
 
@@ -15,17 +15,13 @@ class Solution {
         if start >= end {
             return nums[start]
         }
-        
+               
         return max(maxSubArray(nums, start: start, end: (start + end) / 2),
                    maxSubArray(nums, start: (start + end) / 2 + 1, end: end),
                    crossMax(nums, start: start, end: end))
     }
     
     func crossMax(_ nums: [Int], start: Int, end: Int) -> Int {
-        if start >= end {
-            return nums[start]
-        }
-        
         var leftCurrentSum = 0
         var leftMax = Int.min
         for i in stride(from: (start + end) / 2, through: start, by: -1) {
