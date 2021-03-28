@@ -6,21 +6,20 @@ print(num)
 
 class Solution {
     func indexOf(_ target: Int, from numbers: [Int]) -> Int {
-        return binarySearch(target, from: numbers, start: 0, end: numbers.count - 1)
-    }
-    
-    private func binarySearch(_ target: Int, from numbers: [Int], start: Int, end: Int) -> Int {
-        if start >= end {
-            return target == numbers[start] ? start : -1
+        var start = 0
+        var end = numbers.count - 1
+
+        while start <= end {
+            let middle = (start + end) / 2
+            if target < numbers[middle] {
+                end = middle - 1
+            } else if target > numbers[middle] {
+                start = middle + 1
+            } else { // target == numbers[middle]
+                return middle
+            }
         }
         
-        let middle = (start + end) / 2
-        if target < numbers[middle] {
-            return binarySearch(target, from: numbers, start: start, end: middle - 1)
-        } else if target > numbers[middle] {
-            return binarySearch(target, from: numbers, start: middle + 1, end: end)
-        } else { // target == numbers[middle]
-            return middle
-        }
+        return -1
     }
 }
