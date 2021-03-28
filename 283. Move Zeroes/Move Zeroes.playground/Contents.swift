@@ -1,5 +1,5 @@
 //Runtime: 40 ms, faster than 47.63% of Swift online submissions for Move Zeroes.
-//Memory Usage: 14.6 MB, less than 96.03% of Swift online submissions for Move Zeroes.
+//Memory Usage: 15 MB, less than 40.46% of Swift online submissions for Move Zeroes.
 
 import Foundation
 
@@ -12,14 +12,15 @@ class Solution {
     func moveZeroes(_ nums: inout [Int]) {
         var zeroCount = 0
         var i = 0
-        while i < nums.count - zeroCount {
+        while i < nums.count {
             if nums[i] == 0 {
                 zeroCount += 1
                 nums.remove(at: i)
-                nums.append(0)
             } else {
                 i += 1
             }
         }
+
+        nums.append(contentsOf: [Int](repeating: 0, count: zeroCount))
     }
 }
