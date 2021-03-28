@@ -1,5 +1,11 @@
-//Runtime: 40 ms, faster than 47.63% of Swift online submissions for Move Zeroes.
-//Memory Usage: 15 MB, less than 40.46% of Swift online submissions for Move Zeroes.
+//Runtime: 36 ms, faster than 93.98% of Swift online submissions for Move Zeroes.
+//Memory Usage: 14.8 MB, less than 72.98% of Swift online submissions for Move Zeroes.
+
+// In the past 2 solutions, I used [Int].remove(at:),
+// but it increases complexity to move any elements after the index.
+
+// Time complexity: O(N)
+// Space complexity: O(1)
 
 import Foundation
 
@@ -10,17 +16,17 @@ print(nums)
 
 class Solution {
     func moveZeroes(_ nums: inout [Int]) {
-        var zeroCount = 0
-        var i = 0
-        while i < nums.count {
-            if nums[i] == 0 {
-                zeroCount += 1
-                nums.remove(at: i)
-            } else {
-                i += 1
+        var nonZeroIndex = 0
+        
+        for n in nums {
+            if n != 0 {
+                nums[nonZeroIndex] = n
+                nonZeroIndex += 1
             }
         }
-
-        nums.append(contentsOf: [Int](repeating: 0, count: zeroCount))
+        
+        for i in nonZeroIndex ..< nums.count {
+            nums[i] = 0
+        }
     }
 }
