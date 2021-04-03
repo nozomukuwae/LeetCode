@@ -1,5 +1,5 @@
-//Runtime: 1012 ms, faster than 24.00% of Swift online submissions for Boats to Save People.
-//Memory Usage: 15.8 MB, less than 92.00% of Swift online submissions for Boats to Save People.
+//Runtime: 956 ms, faster than 44.00% of Swift online submissions for Boats to Save People.
+//Memory Usage: 16.2 MB, less than 20.00% of Swift online submissions for Boats to Save People.
 
 // Time complexity: O(NlogN)
 // Space complexity: O(N)
@@ -16,6 +16,7 @@ class Solution {
         let peopleSorted = people.sorted()
         var i = 0
         var j = peopleSorted.count - 1
+        var boatCount = 0
         
         while i < j {
             if peopleSorted[i] + peopleSorted[j] <= limit {
@@ -23,12 +24,13 @@ class Solution {
             }
             
             j -= 1
+            boatCount += 1
         }
         
         if i == j {
-            return peopleSorted.count - j
+            return boatCount + 1
         } else {
-            return peopleSorted.count - j - 1
+            return boatCount
         }
     }
 }
