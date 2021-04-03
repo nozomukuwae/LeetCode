@@ -1,4 +1,5 @@
-//Time Limit Exceeded
+//Runtime: 956 ms, faster than 44.00% of Swift online submissions for Boats to Save People.
+//Memory Usage: 16.3 MB, less than 20.00% of Swift online submissions for Boats to Save People.
 
 // Time complexity: O(NlogN)
 // Space complexity: O(N)
@@ -12,20 +13,22 @@ print(solution.numRescueBoats([1,2], 3))
 
 class Solution {
     func numRescueBoats(_ people: [Int], _ limit: Int) -> Int {
-        let heavierPeople = people.filter { $0 > limit / 2 }.sorted { $0 > $1 }
-        var lighterPeople = people.filter { $0 <= limit / 2 }.sorted { $0 > $1 }
+        let peopleSorted = people.sorted { $0 > $1 }
+        var i = 0
+        var j = peopleSorted.count - 1
         
-        for i in 0 ..< heavierPeople.count {
-            let spaceLeft = limit - heavierPeople[i]
-            if let pairedIndex = lighterPeople.firstIndex(where: { $0 <= spaceLeft }) {
-                lighterPeople.remove(at: pairedIndex)
+        while i < j {
+            if peopleSorted[i] + peopleSorted[j] <= limit {
+                j -= 1
             }
+
+            i += 1
         }
         
-        if lighterPeople.count % 2 == 0 {
-            return heavierPeople.count + lighterPeople.count / 2
+        if i == j {
+            return i + 1
         } else {
-            return heavierPeople.count + lighterPeople.count / 2 + 1
+            return i
         }
     }
 }
