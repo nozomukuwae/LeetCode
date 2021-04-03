@@ -1,4 +1,4 @@
-//Runtime: 2564 ms, faster than 5.11% of Swift online submissions for Container With Most Water.
+//Runtime: 2512 ms, faster than 5.11% of Swift online submissions for Container With Most Water.
 //Memory Usage: 18.1 MB, less than 24.68% of Swift online submissions for Container With Most Water.
 
 // Time complexity: O(N^2)
@@ -18,7 +18,7 @@ class Solution {
         var maxJ = 0
         var maxArea = 0
         
-        for i in 0 ..< height.count {
+        for i in 0 ..< height.count - 1 {
             if height[i] <= maxI {
                 continue
             }
