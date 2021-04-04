@@ -1,4 +1,5 @@
-//Time Limit Exceeded
+//Runtime: 248 ms, faster than 21.97% of Swift online submissions for Longest Substring Without Repeating Characters.
+//Memory Usage: 14.9 MB, less than 46.85% of Swift online submissions for Longest Substring Without Repeating Characters.
 
 // Time complexity: O(N^2)
 // Space complexity: O(N)
@@ -20,23 +21,15 @@ class Solution {
         var tempChars = [Character]()
         var maxSubstringLength = 0
         
-        var i = 0
-        while i < charArray.count {
-            if let index = tempChars.lastIndex(of: charArray[i]) {
+        var end = 0
+        while end < charArray.count {
+            if let index = tempChars.lastIndex(of: charArray[end]) {
                 maxSubstringLength = max(maxSubstringLength, tempChars.count)
-                
-                if tempChars.count - index == 1 {
-                    tempChars.removeAll()
-                    tempChars.append(charArray[i])
-                    i += 1
-                } else {
-                    i -= tempChars.count - index - 1
-                    tempChars.removeAll()
-                }
-            } else {
-                tempChars.append(charArray[i])
-                i += 1
+                tempChars.removeFirst(index + 1)
             }
+            
+            tempChars.append(charArray[end])
+            end += 1
         }
         
         return max(maxSubstringLength, tempChars.count)
