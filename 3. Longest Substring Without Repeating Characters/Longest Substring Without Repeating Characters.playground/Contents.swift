@@ -1,5 +1,5 @@
-//Runtime: 28 ms, faster than 95.68% of Swift online submissions for Longest Substring Without Repeating Characters.
-//Memory Usage: 15.2 MB, less than 9.01% of Swift online submissions for Longest Substring Without Repeating Characters.
+//Runtime: 36 ms, faster than 82.25% of Swift online submissions for Longest Substring Without Repeating Characters.
+//Memory Usage: 15 MB, less than 33.24% of Swift online submissions for Longest Substring Without Repeating Characters.
 
 // Time complexity: O(N)
 // Space complexity: O(N)
@@ -19,23 +19,20 @@ print(solution.lengthOfLongestSubstring("dvdf")) // 3
 
 class Solution {
     func lengthOfLongestSubstring(_ s: String) -> Int {
-        let charArray = Array(s)
         var charDictionary = [Character : Int]()
         var maxSubstringLength = 0
         
         var start = 0
-        var end = 0
-        while end < charArray.count {
-            if let index = charDictionary[charArray[end]],
+        for (end, char) in s.enumerated() {
+            if let index = charDictionary[char],
                start <= index {
                 maxSubstringLength = max(maxSubstringLength, end - start)
                 start = index + 1
             }
             
-            charDictionary[charArray[end]] = end
-            end += 1
+            charDictionary[char] = end
         }
         
-        return max(maxSubstringLength, end - start)
+        return max(maxSubstringLength, s.count - start)
     }
 }
