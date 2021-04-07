@@ -1,5 +1,5 @@
-//Runtime: 44 ms, faster than 96.52% of Swift online submissions for Find First and Last Position of Element in Sorted Array.
-//Memory Usage: 15 MB, less than 68.67% of Swift online submissions for Find First and Last Position of Element in Sorted Array.
+//Runtime: 48 ms, faster than 65.51% of Swift online submissions for Find First and Last Position of Element in Sorted Array.
+//Memory Usage: 15.1 MB, less than 50.63% of Swift online submissions for Find First and Last Position of Element in Sorted Array.
 
 // Time complexity: O(N)
 // Space complexity: O(1)
@@ -14,25 +14,29 @@ print(solution.searchRange([1], 1))
 
 class Solution {
     func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
-        var firstIndex = -1
-        var lastIndex = -1
+        var start = 0
+        var end = nums.count - 1
         
-        for i in 0 ..< nums.count {
-            if nums[i] == target {
-                if firstIndex < 0 {
-                    firstIndex = i
-                } else {
-                    lastIndex = i
+        while start <= end {
+            if nums[(start + end) / 2] < target {
+                start = (start + end) / 2 + 1
+            } else if nums[(start + end) / 2] > target {
+                end = (start + end) / 2 - 1
+            } else { // nums[mid] == target
+                var i = (start + end) / 2 - 1
+                while i >= 0 && nums[i] == target {
+                    i -= 1
                 }
-            } else if nums[i] > target {
-                break
+                
+                var j = (start + end) / 2 + 1
+                while j < nums.count && nums[j] == target {
+                    j += 1
+                }
+                
+                return [i + 1, j - 1]
             }
         }
         
-        if lastIndex < 0 && firstIndex >= 0 {
-            return [firstIndex, firstIndex]
-        } else {
-            return [firstIndex, lastIndex]
-        }
+        return [-1, -1]
     }
 }
