@@ -1,5 +1,5 @@
-//Runtime: 1880 ms, faster than 19.59% of Swift online submissions for Count Primes.
-//Memory Usage: 15.4 MB, less than 27.35% of Swift online submissions for Count Primes.
+//Runtime: 816 ms, faster than 35.92% of Swift online submissions for Count Primes.
+//Memory Usage: 15.5 MB, less than 24.49% of Swift online submissions for Count Primes.
 
 // Time complexity: O(N)
 // Space complexity: O(N)
@@ -16,8 +16,6 @@ class Solution {
     func countPrimes(_ n: Int) -> Int {
         if n < 3 {
             return 0
-        } else if n == 3 {
-            return 1
         }
         
         var isPrime = Array(repeating: true, count: n)
@@ -27,10 +25,15 @@ class Solution {
         isPrime[1] = false
         
         let root = Int(sqrtf(Float(n)))
-        for i in 2 ... root {
-            for j in stride(from: 2 * i, to: n, by: i) {
-                isPrime[j] = false
+        var i = 2
+        while i <= root {
+            if isPrime[i] {
+                for j in stride(from: 2 * i, to: n, by: i) {
+                    isPrime[j] = false
+                }
             }
+            
+            i += 1
         }
         
         return isPrime.filter { $0 }.count
