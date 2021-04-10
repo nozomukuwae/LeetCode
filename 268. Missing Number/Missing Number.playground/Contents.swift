@@ -1,7 +1,7 @@
-//Runtime: 248 ms, faster than 8.92% of Swift online submissions for Missing Number.
-//Memory Usage: 14.6 MB, less than 31.90% of Swift online submissions for Missing Number.
+//Runtime: 200 ms, faster than 14.92% of Swift online submissions for Missing Number.
+//Memory Usage: 14.5 MB, less than 31.90% of Swift online submissions for Missing Number.
 
-// Time complexity: O(NlogN)
+// Time complexity: O(N)
 // Space complexity: O(N)
 
 import Foundation
@@ -14,24 +14,9 @@ print(solution.missingNumber([0])) // 1
 
 class Solution {
     func missingNumber(_ nums: [Int]) -> Int {
-        let sortedNums = nums.sorted()
+        var dictionary = [Int: Int]()
+        nums.indices.map { dictionary[nums[$0]] = $0 }
         
-        var start = 0, end = nums.count - 1
-        var mid: Int!
-        while start < end {
-            mid = (start + end) / 2
-            
-            if sortedNums[mid] > mid {
-                end = mid
-            } else {
-                start = mid + 1
-            }
-        }
-        
-        if sortedNums[end] > end {
-            return end
-        } else {
-            return end + 1
-        }
+        return (0 ... nums.count).first(where: { dictionary[$0] == nil })!
     }
 }
