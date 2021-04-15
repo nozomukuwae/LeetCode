@@ -1,5 +1,5 @@
-//Runtime: 136 ms, faster than 58.59% of Swift online submissions for Majority Element.
-//Memory Usage: 16 MB, less than 9.76% of Swift online submissions for Majority Element.
+//Runtime: 140 ms, faster than 47.81% of Swift online submissions for Majority Element.
+//Memory Usage: 16 MB, less than 26.26% of Swift online submissions for Majority Element.
 
 // Time complexity: O(N)
 // Space complexity: O(N)
@@ -15,8 +15,8 @@ class Solution {
         var dict = [Int: Int]()
         
         for i in 0 ..< nums.count {
-            if let count = dict[nums[i]] {
-                dict[nums[i]] = count + 1
+            if dict[nums[i]] != nil {
+                dict[nums[i]] = dict[nums[i]]! + 1
             } else {
                 dict[nums[i]] = 1
             }
