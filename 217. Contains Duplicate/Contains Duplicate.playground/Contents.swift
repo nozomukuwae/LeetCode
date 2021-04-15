@@ -1,4 +1,4 @@
-//Runtime: 132 ms, faster than 100.00% of Swift online submissions for Contains Duplicate.
+//Runtime: 152 ms, faster than 37.99% of Swift online submissions for Contains Duplicate.
 //Memory Usage: 16.8 MB, less than 30.60% of Swift online submissions for Contains Duplicate.
 
 // Time complexity: O(N)
@@ -15,12 +15,12 @@ class Solution {
     func containsDuplicate(_ nums: [Int]) -> Bool {
         var dict = [Int: Void]()
         
-        for i in 0 ..< nums.count {
-            if dict[nums[i]] != nil {
+        for n in nums {
+            if dict[n] != nil {
                 return true
             }
             
-            dict[nums[i]] = ()
+            dict[n] = ()
         }
         
         return false
