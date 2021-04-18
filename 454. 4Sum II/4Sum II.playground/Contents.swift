@@ -1,7 +1,7 @@
-//Runtime: 752 ms, faster than 5.71% of Swift online submissions for 4Sum II.
-//Memory Usage: 14.2 MB, less than 97.14% of Swift online submissions for 4Sum II.
+//Runtime: 592 ms, faster than 5.71% of Swift online submissions for 4Sum II.
+//Memory Usage: 14.1 MB, less than 97.14% of Swift online submissions for 4Sum II.
 
-// Time complexity: O(N^4)
+// Time complexity: O(N^2)
 // Space complexity: O(N^2)
 
 import Foundation
@@ -26,20 +26,18 @@ class Solution {
             i += 1
         }
         
-        var secondSumDict = [Int: Int]()
+        var count = 0
         i = 0
         while i < nums3.count {
             j = 0
             while j < nums4.count {
-                secondSumDict[nums3[i] + nums4[j], default: 0] += 1
+                count += firstSumDict[-nums3[i] - nums4[j], default: 0]
                 j += 1
             }
             
             i += 1
         }
-
-        return firstSumDict.reduce(0) { (result, arg1) -> Int in
-            return result + arg1.value * secondSumDict[-arg1.key, default: 0]
-        }
+        
+        return count
     }
 }
