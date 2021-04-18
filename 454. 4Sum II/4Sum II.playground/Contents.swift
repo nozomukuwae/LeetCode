@@ -1,5 +1,5 @@
-//Runtime: 516 ms, faster than 14.29% of Swift online submissions for 4Sum II.
-//Memory Usage: 14.3 MB, less than 97.14% of Swift online submissions for 4Sum II.
+//Runtime: 884 ms, faster than 5.71% of Swift online submissions for 4Sum II.
+//Memory Usage: 14.6 MB, less than 97.14% of Swift online submissions for 4Sum II.
 
 // Time complexity: O(N^2)
 // Space complexity: O(N^2)
@@ -19,7 +19,11 @@ class Solution {
         while i < nums1.count {
             j = 0
             while j < nums2.count {
-                firstSumDict[nums1[i] + nums2[j], default: 0] += 1
+                if firstSumDict[nums1[i] + nums2[j]] != nil {
+                    firstSumDict[nums1[i] + nums2[j]]! += 1
+                } else {
+                    firstSumDict[nums1[i] + nums2[j]] = 1
+                }
                 j += 1
             }
             
