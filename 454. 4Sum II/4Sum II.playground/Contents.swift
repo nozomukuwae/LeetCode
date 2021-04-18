@@ -1,5 +1,5 @@
-//Runtime: 592 ms, faster than 5.71% of Swift online submissions for 4Sum II.
-//Memory Usage: 14.1 MB, less than 97.14% of Swift online submissions for 4Sum II.
+//Runtime: 516 ms, faster than 14.29% of Swift online submissions for 4Sum II.
+//Memory Usage: 14.3 MB, less than 97.14% of Swift online submissions for 4Sum II.
 
 // Time complexity: O(N^2)
 // Space complexity: O(N^2)
@@ -31,7 +31,9 @@ class Solution {
         while i < nums3.count {
             j = 0
             while j < nums4.count {
-                count += firstSumDict[-nums3[i] - nums4[j], default: 0]
+                if let pairCount = firstSumDict[-nums3[i] - nums4[j]] {
+                    count += pairCount
+                }
                 j += 1
             }
             
