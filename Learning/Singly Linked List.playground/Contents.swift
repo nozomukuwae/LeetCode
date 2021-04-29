@@ -2,6 +2,7 @@ import Foundation
 
 let list = LinkedList([5,1,3,7])
 list.insert(key: 2, position: 2)
+list.delete(key: 5)
 
 list.printNodes()
 
@@ -57,6 +58,23 @@ class LinkedList {
 
             node.next = m.next
             m.next = node
+        }
+    }
+    
+    func delete(key: Int) {
+        if self.head?.key == key {
+            self.head = self.head?.next
+        } else {
+            var n = self.head
+            while n != nil && n?.next?.key != key {
+                n = n?.next
+            }
+            
+            guard let m = n else {
+                return
+            }
+            
+            m.next = m.next?.next
         }
     }
 }
