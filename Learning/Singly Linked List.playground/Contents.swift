@@ -1,6 +1,8 @@
 import Foundation
 
 let list = LinkedList([5,1,3,7])
+list.insert(key: 2, position: 2)
+
 list.printNodes()
 
 class LinkedList {
@@ -27,6 +29,35 @@ class LinkedList {
         }
         
         print(str)
+    }
+    
+    func insert(key: Int, position: Int) {
+        guard position >= 0 else {
+            assertionFailure("Position is out of range")
+            return
+        }
+        
+        let node = Node(key)
+
+        if position == 0 {
+            node.next = self.head
+            self.head = node
+        } else {
+            var n = self.head
+            var count = 0
+            while count < position - 1 && n != nil {
+                n = n!.next
+                count += 1
+            }
+            
+            guard let m = n else {
+                assertionFailure("Position is out of range")
+                return
+            }
+
+            node.next = m.next
+            m.next = node
+        }
     }
 }
 
