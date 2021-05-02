@@ -1,8 +1,8 @@
-//Runtime: 8 ms, faster than 99.73% of Swift online submissions for Reverse Linked List.
-//Memory Usage: 14.8 MB, less than 55.54% of Swift online submissions for Reverse Linked List.
+//Runtime: 16 ms, faster than 26.27% of Swift online submissions for Reverse Linked List.
+//Memory Usage: 15.2 MB, less than 18.19% of Swift online submissions for Reverse Linked List.
 
 // Time complexity: O(N)
-// Space complexity: O(1)
+// Space complexity: O(N)
 
 import Foundation
 
@@ -31,6 +31,19 @@ class ListNodeUtil {
 
 class Solution {
     func reverseList(_ head: ListNode?) -> ListNode? {
+        return reverseListRecursively(nil, head)
+    }
+    
+    func reverseListRecursively(_ previous: ListNode?, _ current: ListNode?) -> ListNode? {
+        if current == nil { return previous }
+        
+        let next = current!.next
+        current!.next = previous
+        
+        return reverseListRecursively(current, next)
+    }
+
+    func reverseListIteratively(_ head: ListNode?) -> ListNode? {
         var prevNode = head
         var node = head?.next
         head?.next = nil
