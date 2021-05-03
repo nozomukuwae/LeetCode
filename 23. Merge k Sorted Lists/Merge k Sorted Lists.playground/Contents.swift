@@ -1,6 +1,7 @@
-//Time Limit Exceeded
+//Runtime: 84 ms, faster than 71.49% of Swift online submissions for Merge k Sorted Lists.
+//Memory Usage: 15.5 MB, less than 68.42% of Swift online submissions for Merge k Sorted Lists.
 
-// Time complexity: O(KN) where N = element number of the longest linked list
+// Time complexity: O(NlogK) where N = total number of the nodes
 // Space complexity: O(K)
 
 import Foundation
@@ -9,10 +10,12 @@ let solution = Solution()
 
 let node1 = solution.mergeKLists([ListNodeUtil.create([1,4,5]), ListNodeUtil.create([1,3,4]), ListNodeUtil.create([2,6])])
 ListNodeUtil.printNodes(node1)
-let node2 = solution.mergeKLists([])
-ListNodeUtil.printNodes(node2)
-let node3 = solution.mergeKLists([ListNodeUtil.create([])])
-ListNodeUtil.printNodes(node3)
+//let node2 = solution.mergeKLists([])
+//ListNodeUtil.printNodes(node2)
+//let node3 = solution.mergeKLists([ListNodeUtil.create([])])
+//ListNodeUtil.printNodes(node3)
+//let node4 = solution.mergeKLists([ListNodeUtil.create([]), ListNodeUtil.create([1])])
+//ListNodeUtil.printNodes(node4)
 
 class ListNodeUtil {
     static func create(_ array: [Int]) -> ListNode? {
@@ -34,36 +37,67 @@ class ListNodeUtil {
 
 class Solution {
     func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
-        var nextNodes = [Int: ListNode]()
-        for i in 0 ..< lists.count {
-            nextNodes[i] = lists[i]
-        }
-        guard nextNodes.count > 0 else { return nil }
-
-        var minVal = Int.max
-        var minValIndex = 0
-        for i in 0 ..< lists.count {
-            if nextNodes[i] != nil && nextNodes[i]!.val < minVal {
-                minVal = nextNodes[i]!.val
-                minValIndex = i
-            }
-        }
-        let firstNode: ListNode = nextNodes[minValIndex]!
-        var prevNode: ListNode = nextNodes[minValIndex]!
-        nextNodes[minValIndex] = nextNodes[minValIndex]!.next
+        guard lists.count > 0 else { return nil }
         
-        while nextNodes.count > 0 {
-            minVal = Int.max
-            for i in 0 ..< lists.count {
-                if nextNodes[i] != nil && nextNodes[i]!.val < minVal {
-                    minVal = nextNodes[i]!.val
-                    minValIndex = i
-                }
-            }
+        var mergedLists = [ListNode?]()
+        var i = 0
+        var j = lists.count - 1
+        while i < j {
+            mergedLists.append(mergeTwoLists(lists[i], lists[j]))
+            i += 1
+            j -= 1
+        }
+        
+        if i == j {
+            mergedLists.append(lists[i])
+        }
+        
+        while j > 0 {
+            i = 0
             
-            prevNode.next = nextNodes[minValIndex]!
-            prevNode = nextNodes[minValIndex]!
-            nextNodes[minValIndex] = nextNodes[minValIndex]!.next
+            while i < j {
+                mergedLists[i] = mergeTwoLists(mergedLists[i], mergedLists[j])
+                i += 1
+                j -= 1
+            }
+        }
+        
+        return mergedLists[0]
+    }
+    
+    func mergeTwoLists(_ node1: ListNode?, _ node2: ListNode?) -> ListNode? {
+        guard node1 != nil else { return node2 }
+        guard node2 != nil else { return node1 }
+        
+        var firstNode: ListNode
+        var n1, n2: ListNode?
+        if node1!.val <= node2!.val {
+            firstNode = node1!
+            n1 = firstNode.next
+            n2 = node2
+        } else {
+            firstNode = node2!
+            n1 = node1
+            n2 = firstNode.next
+        }
+        var prevNode = firstNode
+        
+        while n1 != nil && n2 != nil {
+            if n1!.val <= n2!.val {
+                prevNode.next = n1
+                prevNode = n1!
+                n1 = n1!.next
+            } else {
+                prevNode.next = n2
+                prevNode = n2!
+                n2 = n2!.next
+            }
+        }
+        
+        if n1 != nil {
+            prevNode.next = n1
+        } else if n2 != nil {
+            prevNode.next = n2
         }
         
         return firstNode
