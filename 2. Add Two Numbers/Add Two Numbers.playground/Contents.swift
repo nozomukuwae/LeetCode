@@ -1,8 +1,8 @@
-//Runtime Error
-//process exited with signal SIGILL
+//Runtime: 36 ms, faster than 98.43% of Swift online submissions for Add Two Numbers.
+//Memory Usage: 14 MB, less than 58.54% of Swift online submissions for Add Two Numbers.
 
-// Time complexity: O(N+M)
-// Space complexity: O(1)
+// Time complexity: O(N) where N = max(l1.length, l2.length)
+// Space complexity: O(N)
 
 import Foundation
 
@@ -10,8 +10,10 @@ let solution = Solution()
 
 //let node1 = ListNodeUtil.create([2,4,3])
 //let node2 = ListNodeUtil.create([5,6,4])
-let node1 = ListNodeUtil.create([9,9,9,9,9,9,9])
-let node2 = ListNodeUtil.create([9,9,9,9])
+//let node1 = ListNodeUtil.create([9,9,9,9,9,9,9])
+//let node2 = ListNodeUtil.create([9,9,9,9])
+let node1 = ListNodeUtil.create([1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1])
+let node2 = ListNodeUtil.create([5,6,4])
 
 let node3 = solution.addTwoNumbers(node1, node2)
 ListNodeUtil.printNodes(node3)
@@ -36,40 +38,24 @@ class ListNodeUtil {
 
 class Solution {
     func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
-        var node = l1
-        var val1 = 0
-        var digit = 1
-        while node != nil {
-            val1 += digit * node!.val
-            digit *= 10
-            node = node!.next
-        }
-        
-        node = l2
-        var val2 = 0
-        digit = 1
-        while node != nil {
-            val2 += digit * node!.val
-            digit *= 10
-            node = node!.next
-        }
-
-        var sum = val1 + val2
-
-        let firstNode: ListNode! = val1 > val2 ? l1 : l2
-        firstNode.val = sum % 10
-        node = firstNode
+        var sum = l1!.val + l2!.val
+        let firstNode = ListNode(sum % 10)
         sum /= 10
-        
-        while sum > 0 {
-            if node!.next == nil {
-                node!.next = ListNode(sum % 10)
-            } else {
-                node!.next!.val = sum % 10
-            }
-            
-            node = node!.next
+        var prevNode = firstNode
+        var node1 = l1!.next
+        var node2 = l2!.next
+
+        while node1 != nil || node2 != nil {
+            sum += (node1?.val ?? 0) + (node2?.val ?? 0)
+            prevNode.next = ListNode(sum % 10)
+            prevNode = prevNode.next!
             sum /= 10
+            node1 = node1?.next
+            node2 = node2?.next
+        }
+        
+        if sum > 0 {
+            prevNode.next = ListNode(sum)
         }
         
         return firstNode
