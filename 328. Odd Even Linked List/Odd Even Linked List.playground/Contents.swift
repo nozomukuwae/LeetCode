@@ -1,5 +1,5 @@
-//Runtime: 28 ms, faster than 78.86% of Swift online submissions for Odd Even Linked List.
-//Memory Usage: 14.9 MB, less than 50.41% of Swift online submissions for Odd Even Linked List.
+//Runtime: 24 ms, faster than 99.19% of Swift online submissions for Odd Even Linked List.
+//Memory Usage: 15.1 MB, less than 34.15% of Swift online submissions for Odd Even Linked List.
 
 // Time complexity: O(N)
 // Space complexity: O(1)
@@ -37,30 +37,18 @@ class ListNodeUtil {
 
 class Solution {
     func oddEvenList(_ head: ListNode?) -> ListNode? {
-        guard let evenHead = head?.next else {
-            return head
+        guard var odd = head else { return nil }
+        var even = head?.next
+        let evenHead = even
+        
+        while even != nil && even?.next != nil {
+            odd.next = even!.next
+            even!.next = even!.next!.next
+            odd = odd.next!
+            even = even!.next
         }
         
-        var evenTail: ListNode! = evenHead
-        var oddTail: ListNode! = head
-        
-        var isOdd = true
-        var node = evenHead.next
-        while node != nil {
-            if isOdd {
-                oddTail.next = node
-                oddTail = node
-            } else {
-                evenTail.next = node
-                evenTail = node
-            }
-            
-            isOdd.toggle()
-            node = node!.next
-        }
-        
-        oddTail.next = evenHead
-        evenTail.next = nil
+        odd.next = evenHead
         return head
     }
 }
