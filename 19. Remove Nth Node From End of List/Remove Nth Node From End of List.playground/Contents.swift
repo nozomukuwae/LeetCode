@@ -1,8 +1,8 @@
-//Runtime: 8 ms, faster than 62.09% of Swift online submissions for Remove Nth Node From End of List.
-//Memory Usage: 14 MB, less than 54.98% of Swift online submissions for Remove Nth Node From End of List.
+//Runtime: 4 ms, faster than 98.58% of Swift online submissions for Remove Nth Node From End of List.
+//Memory Usage: 13.8 MB, less than 83.18% of Swift online submissions for Remove Nth Node From End of List.
 
 // Time complexity: O(N)
-// Space complexity: O(N)
+// Space complexity: O(1)
 
 import Foundation
 
@@ -35,19 +35,24 @@ class ListNodeUtil {
 
 class Solution {
     func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
-        var nodes = [ListNode]()
-        var node = head
-        while node != nil {
-            nodes.append(node!)
-            node = node!.next
+        var n1 = head?.next
+        var count = 0
+        while n1 != nil && count < n {
+            n1 = n1!.next
+            count += 1
         }
         
-        if n >= nodes.count {
+        if count < n {
             return head?.next
         }
         
-        node = nodes[nodes.count - n - 1]
-        node!.next = n <= 1 ? nil : nodes[nodes.count - n + 1]
+        var n2 = head
+        while n1 != nil {
+            n1 = n1!.next
+            n2 = n2!.next
+        }
+        
+        n2!.next = n2!.next?.next
         return head
     }
 }
