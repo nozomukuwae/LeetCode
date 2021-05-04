@@ -1,5 +1,5 @@
 //Runtime: 4 ms, faster than 82.23% of Swift online submissions for Letter Combinations of a Phone Number.
-//Memory Usage: 14.6 MB, less than 38.84% of Swift online submissions for Letter Combinations of a Phone Number.
+//Memory Usage: 14 MB, less than 97.11% of Swift online submissions for Letter Combinations of a Phone Number.
 
 // Time complexity: O(N * 4^N)
 // Space complexity: O(N)
@@ -19,7 +19,7 @@ class Solution {
         guard digits.count > 0 else { return [] }
         
         let digitsArray = Array(digits)
-        var combinations = digitToCandidates(digitsArray[0])
+        var combinations = digitToCandidates[digitsArray[0]]!
         createCombinations(digitsArray, 1, &combinations)
 
         return combinations
@@ -28,7 +28,7 @@ class Solution {
     func createCombinations(_ digits: [Character], _ index: Int, _ combinations: inout [String]) {
         guard index < digits.count else { return }
         
-        let candidates = digitToCandidates(digits[index])
+        let candidates = digitToCandidates[digits[index]]!
         copyElements(&combinations, candidates.count)
         
         for i in 0 ..< combinations.count {
@@ -51,27 +51,15 @@ class Solution {
             i += count
         }
     }
-        
-    func digitToCandidates(_ digit: Character) -> [String] {
-        switch digit {
-        case "2":
-            return ["a","b","c"]
-        case "3":
-            return ["d","e","f"]
-        case "4":
-            return ["g","h","i"]
-        case "5":
-            return ["j","k","l"]
-        case "6":
-            return ["m","n","o"]
-        case "7":
-            return ["p","q","r","s"]
-        case "8":
-            return ["t","u","v"]
-        case "9":
-            return ["w","x","y","z"]
-        default:
-            fatalError()
-        }
-    }
+    
+    let digitToCandidates: [Character: [String]] = [
+        "2": ["a","b","c"],
+        "3": ["d","e","f"],
+        "4": ["g","h","i"],
+        "5": ["j","k","l"],
+        "6": ["m","n","o"],
+        "7": ["p","q","r","s"],
+        "8": ["t","u","v"],
+        "9": ["w","x","y","z"]
+    ]
 }
