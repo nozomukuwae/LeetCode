@@ -1,5 +1,5 @@
-//Runtime: 32 ms, faster than 64.39% of Swift online submissions for Combination Sum.
-//Memory Usage: 14 MB, less than 75.18% of Swift online submissions for Combination Sum.
+//Runtime: 36 ms, faster than 54.68% of Swift online submissions for Combination Sum.
+//Memory Usage: 14.1 MB, less than 64.03% of Swift online submissions for Combination Sum.
 
 // Time complexity: O(M^N) where N = count of candidates, M = max quotient of target / candidates
 // Space complexity: O(M^N)
@@ -19,14 +19,17 @@ class Solution {
         var combinations = [[Int]]()
         
         let maxCount = target / candidates[0]
+        var current = [Int]()
         var i = 0
+        
         while i <= maxCount {
             if candidates[0] * i == target {
-                combinations.append([Int](repeating: candidates[0], count: i))
+                combinations.append(current)
             } else {
-                findCombination(candidates, 1, &combinations, target - candidates[0] * i, [Int](repeating: candidates[0], count: i))
+                findCombination(candidates, 1, &combinations, target - candidates[0] * i, current)
             }
             
+            current.append(candidates[0])
             i += 1
         }
 
