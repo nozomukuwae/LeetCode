@@ -1,5 +1,5 @@
-//Runtime: 32 ms, faster than 64.39% of Swift online submissions for Combination Sum.
-//Memory Usage: 13.9 MB, less than 92.81% of Swift online submissions for Combination Sum.
+//Runtime: 28 ms, faster than 83.09% of Swift online submissions for Combination Sum.
+//Memory Usage: 14.2 MB, less than 53.96% of Swift online submissions for Combination Sum.
 
 // Time complexity: O(M^N) where N = count of candidates, M = max quotient of target / candidates
 // Space complexity: O(M^N)
@@ -24,6 +24,7 @@ class Solution {
         while p <= target {
             if p == target {
                 combinations.append(current)
+                break
             } else {
                 findCombination(candidates, 1, &combinations, target - p, current)
             }
@@ -46,6 +47,7 @@ class Solution {
         while p <= currentTarget {
             if p == currentTarget {
                 combinations.append(current)
+                break
             } else {
                 findCombination(candidates, index + 1, &combinations, currentTarget - p, current)
             }
