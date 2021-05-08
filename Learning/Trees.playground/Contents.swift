@@ -10,7 +10,19 @@ class Node {
     }
 }
 
+class TraverseUtil {
+    // left root right
+    static func inOrder(_ node: Node?) {
+        guard let node = node else { return }
+        inOrder(node.left)
+        print(node.value)
+        inOrder(node.right)
+    }
+}
+
 let root = Node(4)
 root.left = Node(5)
 root.right = Node(6)
 root.left!.left = Node(7)
+
+TraverseUtil.inOrder(root)
