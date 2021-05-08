@@ -18,6 +18,14 @@ class TraverseUtil {
         print(node.value)
         inOrder(node.right)
     }
+    
+    // root left right
+    static func preOrder(_ node: Node?) {
+        guard let node = node else { return }
+        print(node.value)
+        preOrder(node.left)
+        preOrder(node.right)
+    }
 }
 
 let root = Node(4)
@@ -26,3 +34,5 @@ root.right = Node(6)
 root.left!.left = Node(7)
 
 TraverseUtil.inOrder(root)
+print()
+TraverseUtil.preOrder(root)
