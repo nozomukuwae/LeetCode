@@ -34,18 +34,21 @@ class Solution {
         // If a node has a edge from k, fill with time from k
         // If not, fill with Int.max
         var mapFromRoot = [Int: PairFromRoot]()
+        var unvisitedNodes = [Int: Void]()
         for i in 1 ... n { // O(N)
             if mapBetweenTwo[k]![i] != nil {
                 mapFromRoot[i] = PairFromRoot(k, mapBetweenTwo[k]![i]!)
             } else {
                 mapFromRoot[i] = PairFromRoot(0, Int.max)
             }
+            
+            unvisitedNodes[i] = ()
         }
         mapFromRoot[k] = PairFromRoot(k, 0)
-        var visitedNodes = [k]
-
+        unvisitedNodes[k] = nil
+        
         // Fill the map recursively until visiting all the nodes
-        fillMap(&mapFromRoot, &mapBetweenTwo, &visitedNodes) // O(N^2)
+        fillMap(&mapFromRoot, mapBetweenTwo, &unvisitedNodes) // O(N^2)
 
         // Calculate max time
         let maxVal = mapFromRoot.reduce(0) { (currentMax, kv) -> Int in // O(N)
@@ -55,19 +58,17 @@ class Solution {
         return maxVal < Int.max ? maxVal : -1
     }
     
-    // Fill the map (1st round)
-    // If a node has a edge from k, fill with time from k
-    func fillMap(_ mapFromRoot: inout [Int: PairFromRoot], _ mapBetweenTwo: inout [Int: [Int: Int]], _ visitedNodes: inout [Int]) {
-        guard visitedNodes.count < mapFromRoot.count else { return }
+    func fillMap(_ mapFromRoot: inout [Int: PairFromRoot], _ mapBetweenTwo: [Int: [Int: Int]], _ unvisitedNodes: inout [Int: Void]) {
+        guard unvisitedNodes.count > 0 else { return }
 
         var minTime = Int.max
         var minKey: Int? = nil
 
         // Find the unvisited node which has the mininum time from k
-        for kv in mapFromRoot { // O(N)
-            if !visitedNodes.contains(kv.key) && kv.value.time < minTime {
-                minKey = kv.key
-                minTime = kv.value.time
+        for node in unvisitedNodes {
+            if mapFromRoot[node.key]!.time < minTime {
+                minKey = node.key
+                minTime = mapFromRoot[node.key]!.time
             }
         }
 
@@ -83,7 +84,7 @@ class Solution {
             }
         }
 
-        visitedNodes.append(minKey!)
-        fillMap(&mapFromRoot, &mapBetweenTwo, &visitedNodes)
+        unvisitedNodes[minKey!] = nil
+        fillMap(&mapFromRoot, mapBetweenTwo, &unvisitedNodes)
     }
 }
