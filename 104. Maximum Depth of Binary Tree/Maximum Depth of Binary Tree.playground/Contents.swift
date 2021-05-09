@@ -1,5 +1,5 @@
-//Runtime: 28 ms, faster than 48.98% of Swift online submissions for Maximum Depth of Binary Tree.
-//Memory Usage: 15 MB, less than 11.22% of Swift online submissions for Maximum Depth of Binary Tree.
+//Runtime: 24 ms, faster than 92.86% of Swift online submissions for Maximum Depth of Binary Tree.
+//Memory Usage: 15 MB, less than 23.06% of Swift online submissions for Maximum Depth of Binary Tree.
 
 // Time complexity: O(N)
 // Space complexity: O(N)
@@ -37,6 +37,22 @@ public class TreeNode {
 class Solution {
     func maxDepth(_ root: TreeNode?) -> Int {
         guard root != nil else { return 0 }
-        return max(maxDepth(root!.left) + 1, maxDepth(root!.right) + 1)
+        return getMaxDepth(root!)
+    }
+    
+    func getMaxDepth(_ node: TreeNode) -> Int {
+        if node.left != nil {
+            if node.right != nil {
+                return max(getMaxDepth(node.left!) + 1, getMaxDepth(node.right!) + 1)
+            } else {
+                return getMaxDepth(node.left!) + 1
+            }
+        } else {
+            if node.right != nil {
+                return getMaxDepth(node.right!) + 1
+            } else {
+                return 1
+            }
+        }
     }
 }
