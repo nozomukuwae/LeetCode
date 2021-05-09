@@ -1,5 +1,5 @@
-//Runtime: 620 ms, faster than 25.53% of Swift online submissions for Network Delay Time.
-//Memory Usage: 14.7 MB, less than 91.49% of Swift online submissions for Network Delay Time.
+//Runtime: 628 ms, faster than 25.53% of Swift online submissions for Network Delay Time.
+//Memory Usage: 14.7 MB, less than 85.11% of Swift online submissions for Network Delay Time.
 
 // Time complexity: O(N^2)
 // Space complexity: O(N)
@@ -18,6 +18,7 @@ class Solution {
     
     func networkDelayTime(_ times: [[Int]], _ n: Int, _ k: Int) -> Int {
 
+        // Convert nested array into nested dictionary
         var mapBetweenTwo = [Int: [Int: Int]]() // [source: [dest: time]]
         for time in times { // O(N)
             if mapBetweenTwo[time[0]] == nil {
@@ -29,6 +30,9 @@ class Solution {
         
         guard mapBetweenTwo[k] != nil else { return -1 }
         
+        // Fill the map (1st round)
+        // If a node has a edge from k, fill with time from k
+        // If not, fill with Int.max
         var mapFromRoot = [Int: PairFromRoot]()
         for i in 1 ... n { // O(N)
             if mapBetweenTwo[k]![i] != nil {
@@ -40,8 +44,10 @@ class Solution {
         mapFromRoot[k] = PairFromRoot(k, 0)
         var visitedNodes = [k]
 
-        fillMap(&mapFromRoot, mapBetweenTwo, &visitedNodes) // O(N^2)
+        // Fill the map recursively until visiting all the nodes
+        fillMap(&mapFromRoot, &mapBetweenTwo, &visitedNodes) // O(N^2)
 
+        // Calculate max time
         let maxVal = mapFromRoot.reduce(0) { (currentMax, kv) -> Int in // O(N)
             return max(currentMax, kv.value.time)
         }
@@ -49,12 +55,15 @@ class Solution {
         return maxVal < Int.max ? maxVal : -1
     }
     
-    func fillMap(_ mapFromRoot: inout [Int: PairFromRoot], _ mapBetweenTwo: [Int: [Int: Int]], _ visitedNodes: inout [Int]) {
+    // Fill the map (1st round)
+    // If a node has a edge from k, fill with time from k
+    func fillMap(_ mapFromRoot: inout [Int: PairFromRoot], _ mapBetweenTwo: inout [Int: [Int: Int]], _ visitedNodes: inout [Int]) {
         guard visitedNodes.count < mapFromRoot.count else { return }
 
         var minTime = Int.max
         var minKey: Int? = nil
 
+        // Find the unvisited node which has the mininum time from k
         for kv in mapFromRoot { // O(N)
             if !visitedNodes.contains(kv.key) && kv.value.time < minTime {
                 minKey = kv.key
@@ -64,6 +73,8 @@ class Solution {
 
         guard minKey != nil else { return }
 
+        // Fill the map (visitedNodes.count th round)
+        // If a node has a edge from minKey and shorter route from k, update time from k
         if let timesFromMinKey = mapBetweenTwo[minKey!] {
             for time in timesFromMinKey { // O(N)
                 if mapFromRoot[time.key]!.time > time.value + minTime {
@@ -73,6 +84,6 @@ class Solution {
         }
 
         visitedNodes.append(minKey!)
-        fillMap(&mapFromRoot, mapBetweenTwo, &visitedNodes)
+        fillMap(&mapFromRoot, &mapBetweenTwo, &visitedNodes)
     }
 }
