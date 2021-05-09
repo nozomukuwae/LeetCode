@@ -1,5 +1,5 @@
 //Runtime: 12 ms, faster than 83.24% of Swift online submissions for Symmetric Tree.
-//Memory Usage: 13.9 MB, less than 70.67% of Swift online submissions for Symmetric Tree.
+//Memory Usage: 14.4 MB, less than 7.54% of Swift online submissions for Symmetric Tree.
 
 // Time complexity: O(N)
 // Space complexity: O(N)
@@ -28,15 +28,18 @@ public class TreeNode {
 
 class Solution {
     func isSymmetric(_ root: TreeNode?) -> Bool {
-        return areSymmetric(root?.left, root?.right)
-    }
-    
-    func areSymmetric(_ left: TreeNode?, _ right: TreeNode?) -> Bool {
-        if left == nil && right == nil { return true }
-        if left?.val != right?.val { return false }
+        typealias Pair = (left: TreeNode?, right: TreeNode?)
         
-        if !areSymmetric(left!.right, right!.left) { return false }
-        if !areSymmetric(left!.left, right!.right) { return false }
+        var stack = [Pair]()
+        stack.append(Pair(root?.left, root?.right))
+        
+        while let pair = stack.popLast() {
+            if pair.left == nil && pair.right == nil { continue }
+            if pair.left?.val != pair.right?.val { return false }
+            
+            stack.append(Pair(pair.left!.left, pair.right!.right))
+            stack.append(Pair(pair.left!.right, pair.right!.left))
+        }
         
         return true
     }
