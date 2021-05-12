@@ -18,45 +18,40 @@
 // Space complexity: O(1)
 
 // getMin()
-// Time complexity: O(n)
+// Time complexity: O(1)
 // Space complexity: O(1)
 
 import Foundation
 
 class MinStack {
 
-    var stack: [Int]
-    var min: Int?
+    typealias StackElement = (value: Int, currentMin: Int)
+    
+    var stack: [StackElement]
     
     /** initialize your data structure here. */
     init() {
-        stack = [Int]()
+        stack = [StackElement]()
     }
     
     func push(_ val: Int) {
-        stack.append(val)
-        if min != nil && min! > val {
-            min = val
+        if stack.last != nil && val > stack.last!.currentMin {
+            stack.append(StackElement(val, stack.last!.currentMin))
+        } else {
+            stack.append(StackElement(val, val))
         }
     }
     
     func pop() {
-        let val = stack.popLast()
-        if min == val {
-            min = nil
-        }
+        stack.popLast()
     }
     
     func top() -> Int {
-        return stack.last!
+        return stack.last!.value
     }
     
     func getMin() -> Int {
-        if min == nil {
-            min = stack.min()
-        }
-        
-        return min!
+        return stack.last!.currentMin
     }
 }
 
