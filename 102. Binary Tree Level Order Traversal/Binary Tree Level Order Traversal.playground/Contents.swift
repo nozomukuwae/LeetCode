@@ -1,5 +1,5 @@
 //Runtime: 12 ms, faster than 85.06% of Swift online submissions for Binary Tree Level Order Traversal.
-//Memory Usage: 14.3 MB, less than 78.45% of Swift online submissions for Binary Tree Level Order Traversal.
+//Memory Usage: 14.5 MB, less than 41.95% of Swift online submissions for Binary Tree Level Order Traversal.
 
 // Time complexity: O(N)
 // Space complexity: O(N)
@@ -12,6 +12,8 @@ print(solution.levelOrder(node1))
 let node2 = TreeNode(1)
 print(solution.levelOrder(node2))
 print(solution.levelOrder(nil))
+let node3 = TreeNode(1, TreeNode(2, TreeNode(4), nil), TreeNode(3, nil, TreeNode(5)))
+print(solution.levelOrder(node3))
 
 // Definition for a binary tree node.
 public class TreeNode {
@@ -29,26 +31,26 @@ public class TreeNode {
 
 class Solution {
     func levelOrder(_ root: TreeNode?) -> [[Int]] {
-        var queue = [[Int]]()
+        if root == nil { return [] }
 
-        if root == nil { return queue }
-        queue.append([root!.val])
+        var ret: [[Int]] = [[]]
+        var currentQueue: [TreeNode] = [root!]
+        var nextQueue = [TreeNode]()
         
-        appendToQueue(root!.left, &queue, 1)
-        appendToQueue(root!.right, &queue, 1)
-        return queue
-    }
-    
-    func appendToQueue(_ node: TreeNode?, _ queue: inout [[Int]], _ currentLevel: Int) {
-        if node == nil { return }
-        
-        if queue.count <= currentLevel {
-            queue.append([node!.val])
-        } else {
-            queue[currentLevel].append(node!.val)
+        while !currentQueue.isEmpty {
+            let node = currentQueue.removeFirst()
+            ret[ret.count - 1].append(node.val)
+            
+            if node.left != nil { nextQueue.append(node.left!) }
+            if node.right != nil { nextQueue.append(node.right!) }
+            
+            if currentQueue.isEmpty && !nextQueue.isEmpty {
+                currentQueue = nextQueue
+                nextQueue = [TreeNode]()
+                ret.append([Int]())
+            }
         }
-        
-        appendToQueue(node!.left, &queue, currentLevel + 1)
-        appendToQueue(node!.right, &queue, currentLevel + 1)
+
+        return ret
     }
 }
