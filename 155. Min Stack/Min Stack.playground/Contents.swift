@@ -1,5 +1,5 @@
-//Runtime: 4216 ms, faster than 7.87% of Swift online submissions for Min Stack.
-//Memory Usage: 15.2 MB, less than 86.56% of Swift online submissions for Min Stack.
+//Runtime: 76 ms, faster than 29.84% of Swift online submissions for Min Stack.
+//Memory Usage: 15.4 MB, less than 52.13% of Swift online submissions for Min Stack.
 
 // init()
 // Time complexity: O(1)
@@ -26,6 +26,7 @@ import Foundation
 class MinStack {
 
     var stack: [Int]
+    var min: Int?
     
     /** initialize your data structure here. */
     init() {
@@ -34,10 +35,16 @@ class MinStack {
     
     func push(_ val: Int) {
         stack.append(val)
+        if min != nil && min! > val {
+            min = val
+        }
     }
     
     func pop() {
-        stack.popLast()
+        let val = stack.popLast()
+        if min == val {
+            min = nil
+        }
     }
     
     func top() -> Int {
@@ -45,7 +52,11 @@ class MinStack {
     }
     
     func getMin() -> Int {
-        return stack.min()!
+        if min == nil {
+            min = stack.min()
+        }
+        
+        return min!
     }
 }
 
@@ -59,10 +70,29 @@ class MinStack {
  */
 
 let minStack = MinStack()
-minStack.push(-2)
-minStack.push(0)
-minStack.push(-3)
-minStack.getMin() // return -3
+//minStack.push(-2)
+//minStack.push(0)
+//minStack.push(-3)
+//minStack.getMin() // return -3
+//minStack.pop()
+//minStack.top()    // return 0
+//minStack.getMin() // return -2
+
+minStack.push(-10)
+minStack.push(14)
+minStack.getMin()
+minStack.getMin()
+minStack.push(-20)
+minStack.getMin()
+minStack.getMin()
+minStack.top()
+minStack.getMin()
 minStack.pop()
-minStack.top()    // return 0
-minStack.getMin() // return -2
+minStack.push(10)
+minStack.push(-7)
+minStack.getMin() // -10
+minStack.push(7)
+minStack.pop()
+minStack.top() // -7
+minStack.getMin() // -10
+minStack.pop()
