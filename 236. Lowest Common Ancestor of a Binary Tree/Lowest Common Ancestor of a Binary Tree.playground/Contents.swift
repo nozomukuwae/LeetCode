@@ -1,5 +1,5 @@
-//Runtime: 2964 ms, faster than 5.46% of Swift online submissions for Lowest Common Ancestor of a Binary Tree.
-//Memory Usage: 443.8 MB, less than 6.18% of Swift online submissions for Lowest Common Ancestor of a Binary Tree.
+//Runtime: 76 ms, faster than 60.81% of Swift online submissions for Lowest Common Ancestor of a Binary Tree.
+//Memory Usage: 19.1 MB, less than 71.50% of Swift online submissions for Lowest Common Ancestor of a Binary Tree.
 
 // Time complexity: O(N)
 // Space complexity: O(N)
@@ -34,30 +34,20 @@ public class TreeNode {
 
 class Solution {
     func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
-        let pQueue = queueToReach(root, p!, [])!
-        let qQueue = queueToReach(root, q!, [])!
+        if root == nil { return nil }
+        if root === p || root === q { return root }
         
-        var i = 0
-        while i < pQueue.count && i < qQueue.count && pQueue[i] === qQueue[i] {
-            i += 1
+        let leftAncestor = lowestCommonAncestor(root!.left, p, q)
+        let rightAncestor = lowestCommonAncestor(root!.right, p, q)
+        
+        if leftAncestor != nil {
+            if rightAncestor != nil {
+                return root
+            } else {
+                return leftAncestor
+            }
+        } else {
+            return rightAncestor
         }
-        
-        return pQueue[i - 1]
-    }
-    
-    func queueToReach(_ current: TreeNode?, _ target: TreeNode, _ queue: [TreeNode]) -> [TreeNode]? {
-        if current == nil { return nil }
-
-        var currentQueue = queue
-        currentQueue.append(current!)
-        if current === target { return currentQueue }
-        
-        if let leftQueue = queueToReach(current!.left, target, currentQueue) {
-            return leftQueue
-        } else if let rightQueue = queueToReach(current!.right, target, currentQueue) {
-            return rightQueue
-        }
-        
-        return nil
     }
 }
